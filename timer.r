@@ -55,3 +55,18 @@ source("Scripts/Method2_parallel_computing.r")
 toc(log = TRUE)
 printTicTocLog() %>% 
   knitr::kable()
+
+# dynamic message for printing which method is the fastest
+# index 2 - since we use a test method, which will always be fastest
+timing_data <- printTicTocLog()
+fastest_method <- timing_data %>% 
+  arrange(Seconds) %>% 
+  pull(`Function type`) %>% 
+  .[2]
+cat(paste("The fastest method is:", fastest_method))
+
+# In my case, the fastest method is the second one. 
+# To be honest, I am not completely sure why this is
+# maybe configuring the cluster is compute intensive, and the purrr-package
+# is faster. Another theory might be that the second task is seeing better gains
+# by using parallelisation. 
